@@ -1,0 +1,21 @@
+server:
+  rootUrl: "http://127.0.0.1:8080"
+  port: 8080
+
+logging:
+  level:
+    root: "INFO" 
+    
+spring:
+  application:
+    name: springboot-jpa-demo
+  jpa:
+    show-sql: true
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: "jdbc:mysql://127.0.0.1:3306/learns_demo?characterEncoding=UTF-8"
+    username: "root"
+    password: "000000"
+    initial-size: 5
+    minimum-idle: 5
+    maximum-pool-size: 10

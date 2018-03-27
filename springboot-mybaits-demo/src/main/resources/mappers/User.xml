@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.primeton.learns.springboot.mybatis.demo.dao.UserDao" >
+    <resultMap id="BASE_RESULT_MAP" type="com.primeton.learns.springboot.mybatis.demo.model.User" >
+        <id column="USER_ID" property="userId"/>
+        <result column="USER_NAME" property="userName"/>
+        <result column="USER_EMAIL" property="userEmail"/>
+        <result column="USER_MOBILE" property="userMobile"/>
+        <result column="USER_NICKNAME" property="userNickname"/>
+        <result column="USER_AVATAR" property="userAvatar"/>
+        <result column="USER_PASSWORD" property="userPassword"/>
+        <result column="USER_GENDER" property="userGender"/>
+        <result column="USER_BIRTHDATE" property="userBirthdate"/>
+        <result column="USER_ADDRESS" property="userAddress"/>
+        <result column="USER_NOTES" property="userNotes"/>
+        <result column="LOGIN_TIME" property="loginTime"/>
+        <result column="LAST_LOGIN_TIME" property="lastLoginTime"/>
+        <result column="CREATED_USER" property="createdUser"/>
+        <result column="CREATED_TIME" property="createdTime"/>
+        <result column="UPDATED_USER" property="updatedUser"/>
+        <result column="UPDATED_TIME" property="updatedTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        USER_ID, USER_NAME, USER_EMAIL, 
+        USER_MOBILE, USER_NICKNAME, USER_AVATAR, 
+        USER_PASSWORD, USER_GENDER, USER_BIRTHDATE, 
+        USER_ADDRESS, USER_NOTES, LOGIN_TIME, LAST_LOGIN_TIME,
+        CREATED_USER, CREATED_TIME, UPDATED_USER, UPDATED_TIME
+    </sql>
+
+    <select id="queryAll" resultMap="BASE_RESULT_MAP"  >
+       SELECT <include refid="Base_Column_List" />
+       FROM DEMO_USER
+    </select>
+
+    <select id="getById" resultMap="BASE_RESULT_MAP" >
+       SELECT <include refid="Base_Column_List" />
+       FROM DEMO_USER
+       WHERE USER_ID = #{id}
+    </select>
+
+    <select id="getLock" resultMap="BASE_RESULT_MAP" >
+       SELECT 
+       <include refid="Base_Column_List" />
+       FROM DEMO_USER
+       WHERE USER_ID = #{id}
+       FOR UPDATE
+    </select>
+
+    <select id="getByUserName" resultMap="BASE_RESULT_MAP" >
+       SELECT <include refid="Base_Column_List" />
+       FROM DEMO_USER
+       WHERE USER_NAME = #{userName}
+    </select>
+
+    <insert id="insert">
+       INSERT INTO DEMO_USER (<include refid="Base_Column_List" />) 
+       VALUES  (#{userId},#{userName},#{userEmail},
+                #{userMobile},#{userNickname},#{userAvatar},
+                #{userPassword},#{userGender},#{userBirthdate},
+                #{userAddress},#{userNotes},#{loginTime},#{lastLoginTime},
+			    #{createdUser},#{createdTime},#{updatedUser},#{updatedTime})
+    </insert>
+
+    <update id="update">
+       UPDATE DEMO_USER 
+       SET  USER_NAME = #{userName},USER_EMAIL = #{userEmail},
+            USER_MOBILE = #{userMobile},USER_NICKNAME = #{userNickname},
+            USER_AVATAR = #{userAvatar},USER_PASSWORD = #{userPassword},
+            USER_GENDER = #{userGender},USER_BIRTHDATE = #{userBirthdate},
+            USER_ADDRESS = #{userAddress},USER_NOTES = #{userNotes},
+            LOGIN_TIME = #{loginTime},LAST_LOGIN_TIME = #{lastLoginTime},
+			CREATED_USER = #{createdUser},CREATED_TIME = #{createdTime},
+            UPDATED_USER = #{updatedUser},UPDATED_TIME = #{updatedTime}
+       WHERE USER_ID = #{userId}
+    </update>
+
+    <delete id="delete" >
+       DELETE FROM DEMO_USER 
+       WHERE USER_ID =#{id}
+    </delete>
+</mapper>

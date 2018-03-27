@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.primeton.learns.springboot.mybatis.demo.dao.IdEntityDao" >
+    <resultMap id="BASE_RESULT_MAP" type="com.primeton.learns.springboot.mybatis.demo.model.IdEntity" >
+        <id column="ID_NAME" property="idName"/>
+        <result column="ID_VALUE" property="idValue"/>
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        ID_NAME, ID_VALUE
+    </sql>
+
+    <select id="queryAll" resultMap="BASE_RESULT_MAP"  >
+       SELECT <include refid="Base_Column_List" />
+       FROM DEMO_ID_TABLE
+    </select>
+
+    <select id="getById" resultMap="BASE_RESULT_MAP" >
+       SELECT <include refid="Base_Column_List" />
+       FROM DEMO_ID_TABLE
+       WHERE ID_NAME = #{id}
+    </select>
+
+    <select id="getLock" resultMap="BASE_RESULT_MAP" >
+       SELECT 
+       <include refid="Base_Column_List" />
+       FROM DEMO_ID_TABLE
+       WHERE ID_NAME = #{id}
+       FOR UPDATE
+    </select>
+
+    <insert id="insert">
+       INSERT INTO DEMO_ID_TABLE (<include refid="Base_Column_List" />) 
+       VALUES (#{idName}, #{idValue})
+    </insert>
+
+    <update id="update">
+       UPDATE DEMO_ID_TABLE 
+       SET ID_VALUE = #{idValue}
+       WHERE ID_NAME = #{idName}
+    </update>
+
+    <delete id="delete" >
+       DELETE FROM DEMO_ID_TABLE 
+       WHERE ID_NAME =#{id}
+    </delete>
+</mapper>
